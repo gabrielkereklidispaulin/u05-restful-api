@@ -9,7 +9,7 @@ const CharacterSchema = new mongoose.Schema({
     image: { type: String },
     model: { type: String },
     tier_ranking: { type: String, enum: ["S", "A", "B", "C", "D"], required: true },
-    notable_players: { type: [string], default: [] }
+    notable_players: { type: [String], default: [] }
 });
 
 const Character = mongoose.model("Character", CharacterSchema); 
