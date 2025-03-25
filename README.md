@@ -70,14 +70,14 @@ API:et gör det möjligt att hämta, lägga till, uppdatera och ta bort karaktä
 ### Endpoint testing with curl
 
 #### Get all characters
-curl -X GET http://localhost:4000/characters
+curl -X GET https://u05-restful-api.onrender.com/characters 
 
 #### Get specific character
-curl -X GET http://localhost:4000/characters/1
+curl -X GET https://u05-restful-api.onrender.com/characters/{id}
 
 #### Add new character 
 
-curl -X POST http://localhost:4000/characters \
+curl -X POST https://u05-restful-api.onrender.com/characters \
      -H "Content-Type: application/json" \
      -d '{
            "id": 3,
@@ -94,7 +94,7 @@ curl -X POST http://localhost:4000/characters \
 
 #### Update character 
 
-curl -X PUT http://localhost:4000/characters/3 \
+curl -X PUT https://u05-restful-api.onrender.com/characters/{id} \
      -H "Content-Type: application/json" \
      -d '{
            "name": "Pikachu",
@@ -102,7 +102,7 @@ curl -X PUT http://localhost:4000/characters/3 \
          }'
 
 #### Delete character
-curl -X DELETE http://localhost:4000/characters/3
+curl -X DELETE https://u05-restful-api.onrender.com/characters/{id}
 
 
 ### Thing to add 
