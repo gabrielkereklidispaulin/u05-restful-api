@@ -2,12 +2,13 @@ require("dotenv").config();
 const express = require("express"); 
 const cors = require("cors");
 const mongoose = require("mongoose");
+const Character = require("./models/Character");
+
 const app = express(); 
+const PORT = process.env.PORT || 4000; 
 
 app.use(cors());
 app.use(express.json()); 
-
-const PORT = process.env.PORT || 4000; // ändra port? 
 
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
@@ -15,10 +16,6 @@ mongoose.connect(process.env.MONGO_URI, {
 })
 .then(() => console.log("Connected to MongoDB!"))
 .catcg(err => console.error("MongoDB connection error:", err)); 
-
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
 
 let characters = [
     {
@@ -47,44 +44,64 @@ let characters = [
     }
   ];
 
-// ✅ Lägg till denna route
 app.get("/", (req, res) => {
   res.send("API is running...");
 });
 
-app.get("/characters", (req, res) => {
-  res.json(characters);
+// Get all characters
+app.get("/characters", async (req, res) => {
+  try {
+    const characters = await Character.find(); 
+    res.json(characters);
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error});
+  }
 });
 
-app.get("/characters/:id", (req, res) => {
-  const character = charaters.find (c => c.id === parseInt(req.params.id));
-  if (!character) return res.status(404).json({ message: "Character not found"});
-  res.json(character);
-});
-
-app.post("/characters", (req, res) => {
-  const newCharacter = { id: characters.length + 1, ...req.body }; 
-  characters.push(newCharacter); 
-  res.status(201).json(newCharacter);
-});
-
-app.put("/characters/:id", (req, res) => {
-  let character = characters.find(c => c.id === parseInt(req.params.id));
-  if (!character) return res.status(404).json({ message: "Characters not found"});
-
-  character = { id: character.id, ... req.body }; 
-  characters = characters.map(c => (c.id === character.id ? character : c)); 
-
-  res.json(character); 
-
+// Get specific character by id
+app.get("/characters/:id", async (req, res) => {
+  try {
+    const character = await Character.findById(req.params.id); 
+    if (!character) return res.status(404).json({ message: "Character not found" });
+    res.json(character);
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error });
+  }
 }); 
 
-app.patch("/characters/:id", (req, res) => {
-  characters = characters.filter(c => c.id !== parseInt(req.params.id)); 
-  res.json({ message: "Character deleted"});
+// Create new character
+app.post("/characters", async (req, res) => {
+  try {
+      const newCharacter = new Character(req.body);
+      await newCharacter.save();
+      res.status(201).json(newCharacter);
+  } catch (error) {
+      res.status(400).json({ message: "Invalid data", error });
+  }
 });
 
-app.delete("/characters/:id", (req, res) => {
-  characters = characters.filter(c => c.id !== parseInt(req.params.id));
-  res.json({ message: "Character deleted"}); 
-} )
+// Update character
+app.put("/characters/:id", async (req, res) => {
+  try {
+      const updatedCharacter = await Character.findByIdAndUpdate(req.params.id, req.body, { new: true });
+      if (!updatedCharacter) return res.status(404).json({ message: "Character not found" });
+      res.json(updatedCharacter);
+  } catch (error) {
+      res.status(500).json({ message: "Server error", error });
+  }
+});
+
+// Delete character
+app.delete("/characters/:id", async (req, res) => {
+  try {
+      const deletedCharacter = await Character.findByIdAndDelete(req.params.id);
+      if (!deletedCharacter) return res.status(404).json({ message: "Character not found" });
+      res.json({ message: "Character deleted successfully" });
+  } catch (error) {
+      res.status(500).json({ message: "Server error", error });
+  }
+});
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
