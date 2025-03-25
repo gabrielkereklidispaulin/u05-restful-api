@@ -51,6 +51,7 @@ app.post("/characters", async (req, res) => {
     await newCharacter.save(); 
     res.status(201).json(newCharacter); 
   } catch (error) {
+    console.error("Error creating character:", error);
     res.status(500).json({ message: "Failed to create character", error }); 
   }
 });
