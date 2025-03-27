@@ -12,5 +12,4 @@ const CharacterSchema = new mongoose.Schema({
     notable_players: { type: [String], default: [] }
 });
 
-const Character = mongoose.model("Character", CharacterSchema); 
-module.exports = Character; 
+module.exports = mongoose.model("Character", CharacterSchema);
