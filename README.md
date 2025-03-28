@@ -63,7 +63,6 @@ API:et gör det möjligt att hämta, lägga till, uppdatera och ta bort karaktä
 ```curl -X POST https://u05-restful-api.onrender.com/characters \
      -H "Content-Type: application/json" \
      -d '{
-           "id": 3,
            "name": "Pikachu",
            "weight_class": "light",
            "movement_speed": 9,
