@@ -11,7 +11,6 @@ API:et gör det möjligt att hämta, lägga till, uppdatera och ta bort karaktä
 
 ```json
 {
-  "id": 1,
   "name": "Fox",
   "weight_class": "light",
   "movement_speed": 10,
