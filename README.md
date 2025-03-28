@@ -4,7 +4,10 @@
 Ett RESTful API för att hantera karaktärer från Super Smash Bros. Melee.  
 API:et gör det möjligt att hämta, lägga till, uppdatera och ta bort karaktärer.
 
-
+## Installation 
+1. Klona repot  
+2. Kör npm install i projektmappen 
+3. Anropa med curl, instruktioner finns längre ner
 ## Objektmodell
 
 ### Characters
