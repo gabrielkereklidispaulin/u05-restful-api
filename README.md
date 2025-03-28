@@ -1,8 +1,8 @@
 
 # Melee API 
 
-Ett RESTful API för att hantera karaktärer och användare från Super Smash Bros. Melee.  
-API:et gör det möjligt att hämta, lägga till, uppdatera och ta bort karaktärer samt hantera användare.  
+Ett RESTful API för att hantera karaktärer från Super Smash Bros. Melee.  
+API:et gör det möjligt att hämta, lägga till, uppdatera och ta bort karaktärer.
 
 
 ## Objektmodell
@@ -24,18 +24,6 @@ API:et gör det möjligt att hämta, lägga till, uppdatera och ta bort karaktä
 }
 ```
 
-### Users 
-
-
-
-```json
-{
-  "id": 1,
-  "username": "Void",
-  "email": "v0idl1ng@yahoo.com",  
-  "password": "hashed_password"
-}
-````
 
 ## API Endpoints
 
@@ -61,23 +49,18 @@ API:et gör det möjligt att hämta, lägga till, uppdatera och ta bort karaktä
 | **PUT**    | `/api/users/:id`    | Uppdatera en user via ID |
 | **DELETE** | `/api/user/:id`    | Ta bort en user |
 
-| Metod  | Resurs-URI            | Beskrivning |
-|--------|-----------------------|-------------|
-| **POST**    | `/api/auth/login`      | Logga in user|
-| **POST**    | `/api/auth/logout`    | Logga ut user|
-
 
 ### Endpoint testing with curl
 
 #### Get all characters
-curl -X GET https://u05-restful-api.onrender.com/characters 
+`curl -X GET https://u05-restful-api.onrender.com/characters` 
 
 #### Get specific character
-curl -X GET https://u05-restful-api.onrender.com/characters/{id}
+`curl -X GET https://u05-restful-api.onrender.com/characters/{id}`
 
 #### Add new character 
 
-curl -X POST https://u05-restful-api.onrender.com/characters \
+```curl -X POST https://u05-restful-api.onrender.com/characters \
      -H "Content-Type: application/json" \
      -d '{
            "id": 3,
@@ -90,22 +73,18 @@ curl -X POST https://u05-restful-api.onrender.com/characters \
            "model": "url-to-3d-model",
            "tier_ranking": "A",
            "notable_players": ["Axe, Jchu"]
-         }'
+         }' 
+```
 
 #### Update character 
 
-curl -X PUT https://u05-restful-api.onrender.com/characters/{id} \
+```curl -X PUT https://u05-restful-api.onrender.com/characters/{id} \
      -H "Content-Type: application/json" \
      -d '{
            "name": "Pikachu",
            "tier_ranking": "S"
          }'
+```
 
 #### Delete character
-curl -X DELETE https://u05-restful-api.onrender.com/characters/{id}
-
-
-### Thing to add 
-
-
-User handling middleware 
+`curl -X DELETE https://u05-restful-api.onrender.com/characters/{id}`
